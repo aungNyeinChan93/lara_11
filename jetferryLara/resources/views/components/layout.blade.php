@@ -10,7 +10,7 @@
     <nav>
         @auth
         <div>
-            <x-nav-link>Home</x-nav-link>
+            <a href="/test/home">Home</a>
             <a href="/test/users">Users</a>
             <a href="/test/customers">Customers</a>
         </div>

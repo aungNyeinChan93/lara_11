@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
-use Illuminate\Container\Attributes\Auth;
+// use Illuminate\Container\Attributes\Auth;
 
 Route::get("test", function () {
     dump("test");
@@ -14,6 +14,10 @@ Route::get("test", function () {
 });
 
 Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
+    // Home
+    Route::get("home",function(){
+        return view('users.home');
+    })->name('userHome');
 
     // customer
     Route::get("customers", [CustomerController::class, 'index'])->name('customers.index');
