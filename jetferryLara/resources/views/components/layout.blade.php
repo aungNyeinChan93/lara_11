@@ -28,10 +28,11 @@
                                     <x-link href="/test/home" :active="request()->is('test/home')"> Dashboard </x-link>
                                     <x-link href="/test/users" :active="request()->is('test/users')"> Users </x-link>
                                     <x-link href="/test/customers" :active="request()->is('test/customers')"> Customers </x-link>
-                                    <x-link href="/test/login" :active="request()->is('test/login')"> Login </x-link>
+                                    <x-link href="/test/jobPosition/home" :active="request()->is('test/jobPosition/home')"> Job Positions </x-link>
                                 </div>
                             @endauth
                             @guest
+                                <x-link href="/test/login" :active="request()->is('test/login')"> Login </x-link>
                                 <a href="/custome/login">Login</a>
                                 <a href="/custome/register">Register</a>
                             @endguest
@@ -64,6 +65,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="-mr-2 flex md:hidden">
                         <!-- Mobile menu button -->
                         <button type="button"

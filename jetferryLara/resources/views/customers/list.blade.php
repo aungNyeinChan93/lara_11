@@ -1,7 +1,7 @@
 <x-layout>
     <div class="container">
         <x-slot:heading >
-            <h3>Customer List</h3>
+            Customer Lists
         </x-slot:heading>
 
         <button class="bg-red-400 rounded px-4 py-1 my-1 float-end">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobPositionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -23,10 +24,10 @@ Route::prefix('custome')->middleware(["guest"])->group(function () {
 });
 
 Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
+
     // Home
     Route::get("home",function(){
         $users = User::get();
-        // dump($users);
         return view('users.home',compact('users'));
     })->name('userHome');
 
@@ -38,7 +39,16 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
     Route::get("users/{user}", [UserController::class, 'show'])->name("users.show");
     Route::get("users", [UserController::class, 'index'])->name("users.index");
 
+    // logout
     Route::post('logout',[AuthController::class,'logout'])->name('logout');
+
+
+    // jobPosition
+    Route::prefix('jobPosition')->group(function(){
+        Route::get('home',[JobPositionController::class,'home'])->name('jobPosition.home');
+        Route::get('home/{id}',[JobPositionController::class,'show'])->name('jobPosition.show');
+    });
 });
+
 
 

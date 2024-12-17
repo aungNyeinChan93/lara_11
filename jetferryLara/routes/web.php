@@ -32,18 +32,22 @@ Route::get('/auth/{provider}/redirect', function ($provider) {
 
 Route::get('/auth/{provider}/callback', function ($provider) {
     $user = Socialite::driver($provider)->user();
-    
-    // $user = User::updateOrCreate([
-    //     'github_id' =>$user->id,
-    // ], [
-    //     'name' =>$user->name,
-    //     'email' =>$user->email,
-    //     'github_token' =>$user->token,
-    //     'github_refresh_token' =>$user->refreshToken,
-    // ]);
 
-    // Auth::login($user);
+    $user = User::updateOrCreate([
+        'provider_id' =>$user->id,
+    ], [
+        'name' =>$user->name,
+        'nickname' =>$user->nickname,
+        'email' =>$user->email,
+        'provider' =>$provider,
+        'provider_token' =>$user->token,
+    ]);
 
-    // return redirect('/dashboard');
+    Auth::login($user);
+
+    return to_route("userHome");
 });
+
+
+
 
