@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 // use Illuminate\Container\Attributes\Auth;
 
-Route::get("test/register", function () {
+Route::get("test/login", function () {
     return view('test.register');
 });
 
@@ -26,7 +26,7 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
     // Home
     Route::get("home",function(){
         $users = User::get();
-        // dump($users);    
+        // dump($users);
         return view('users.home',compact('users'));
     })->name('userHome');
 

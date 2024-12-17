@@ -17,26 +17,18 @@
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
                         <div class="shrink-0">
-                            {{-- <img class="size-8"
+                            <img class="size-8"
                                 src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                                alt="Your Company"> --}}
+                                alt="Your Company">
                         </div>
                         <div class="hidden md:block">
                             @auth
                                 <div class="ml-10 flex items-baseline space-x-4">
                                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                    <a href="{{ url('test/home') }}"
-                                        class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                                        aria-current="page">Dashboard</a>
-                                    <a href="{{ url('test/users') }}"
-                                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">User</a>
-                                    <a href="{{ url('test/customers') }}"
-                                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Customers</a>
-                                    <a href="{{ url('test/register') }}"
-                                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login
-                                        Test</a>
-                                    <a href="#"
-                                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reports</a>
+                                    <x-link href="/test/home" :active="request()->is('test/home')"> Dashboard </x-link>
+                                    <x-link href="/test/users" :active="request()->is('test/users')"> Users </x-link>
+                                    <x-link href="/test/customers" :active="request()->is('test/customers')"> Customers </x-link>
+                                    <x-link href="/test/login" :active="request()->is('test/login')"> Login </x-link>
                                 </div>
                             @endauth
                             @guest
@@ -115,7 +107,7 @@
 
         <header class="bg-white shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{$heading}}</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ $heading }}</h1>
             </div>
         </header>
         <main>
@@ -125,6 +117,7 @@
             </div>
         </main>
     </div>
+
 
 </body>
 

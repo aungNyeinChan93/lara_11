@@ -14,10 +14,12 @@
         @foreach ($users as $user)
             <x-card>
                 <x-slot:title>
-                   {{$user->name}}
+                    {{ $user->name }}
                 </x-slot:title>
                 desc Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae veritatis repellat porro!
             </x-card>
         @endforeach
     </div>
+
+  
 </x-layout>
