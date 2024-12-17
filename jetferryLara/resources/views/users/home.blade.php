@@ -12,14 +12,11 @@
 
     <div class=" grid grid-cols-4 my-3 gap-5">
         @foreach ($users as $user)
-            <x-card>
-                <x-slot:title>
-                    {{ $user->name }}
-                </x-slot:title>
-                desc Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae veritatis repellat porro!
+            <x-card  href="{{route('users.show',$user->id)}}" :user="$user">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt cupiditate voluptatum animi?
             </x-card>
         @endforeach
     </div>
 
-  
+
 </x-layout>
