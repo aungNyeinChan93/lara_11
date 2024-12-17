@@ -1,22 +1,33 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 // use Illuminate\Container\Attributes\Auth;
 
-Route::get("test", function () {
-    dump("test");
-    echo "<pre></pre>";
-    echo "hello </br>";
-    print('hell0');
+Route::get("test/register", function () {
+    return view('test.register');
+});
+
+Route::prefix('custome')->middleware(["guest"])->group(function () {
+
+    Route::get("register", [AuthController::class, 'registerPage'])->name('register');
+    Route::post("register",[AuthController::class,'register'])->name('custome.register');
+
+
+    Route::get('login',[AuthController::class,'loginPage'])->name('login');
+    Route::post('login',[AuthController::class,'login'])->name('custome.login');
+
 });
 
 Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
     // Home
     Route::get("home",function(){
-        return view('users.home');
+        $users = User::get();
+        // dump($users);    
+        return view('users.home',compact('users'));
     })->name('userHome');
 
     // customer
@@ -31,13 +42,3 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
 });
 
 
-Route::prefix('custome')->middleware(["guest"])->group(function () {
-
-    Route::get("register", [AuthController::class, 'registerPage'])->name('register');
-    Route::post("register",[AuthController::class,'register'])->name('custome.register');
-
-
-    Route::get('login',[AuthController::class,'loginPage'])->name('login');
-    Route::post('login',[AuthController::class,'login'])->name('custome.login');
-
-});

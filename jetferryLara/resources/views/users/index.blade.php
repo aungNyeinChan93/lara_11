@@ -1,5 +1,7 @@
 <x-layout>
-    <h1>users list</h1>
+    <x-slot:heading>
+        User List
+    </x-slot:heading>
     <ol>
         @foreach($users as $key => $user)
 

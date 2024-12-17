@@ -1,6 +1,8 @@
 <x-layout>
     <div class="container">
-        <h3>Customer List</h3>
+        <x-slot:heading>
+            <h3>Customer List</h3>
+        </x-slot:heading>
 
         <div>
             <form action="{{ route('logout') }}" method="post">

@@ -1,5 +1,8 @@
 <x-layout>
     <div class="container">
+        <x-slot:heading>
+            Customer Detail
+        </x-slot:heading>
         <div class="card">
             <div class="card-header">
                 <h4>{{ $customer->name }} || <span>Role ({{ $customer->type }})</span></h4>
