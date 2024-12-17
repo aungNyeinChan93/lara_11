@@ -29,6 +29,7 @@
                                     <x-link href="/test/users" :active="request()->is('test/users')"> Users </x-link>
                                     <x-link href="/test/customers" :active="request()->is('test/customers')"> Customers </x-link>
                                     <x-link href="/test/jobPosition/home" :active="request()->is('test/jobPosition/home')"> Job Positions </x-link>
+                                    <x-link href="/test/posts" :active="request()->is('test/posts')"> Posts </x-link>
                                 </div>
                             @endauth
                             @guest

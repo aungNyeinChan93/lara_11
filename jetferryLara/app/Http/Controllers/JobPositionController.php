@@ -16,7 +16,11 @@ class JobPositionController extends Controller
         return view("test.jobPosition.home",compact('jobs'));
     }
 
-    // show
+    /**
+     * Summary of show
+     * @param mixed $id
+     * @return \Illuminate\Contracts\View\View
+     */
     public function show($id){
         $job = JobPosition::findOrFail($id);
         return view('test.jobPosition.detail',compact('job'));

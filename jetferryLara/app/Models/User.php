@@ -19,12 +19,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nickname',
         'email',
         'password',
         'provider',
         'provider_id',
         'nickname',
-        'provider_token'
+        'provider_token',
+        "role"
     ];
 
     /**
@@ -49,4 +51,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
 }

@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\JobPositionController;
+use App\Http\Controllers\PostController;
 use App\Models\User;
+use App\Models\Tester;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\JobPositionController;
 // use Illuminate\Container\Attributes\Auth;
 
 Route::get("test/login", function () {
@@ -48,7 +50,25 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
         Route::get('home',[JobPositionController::class,'home'])->name('jobPosition.home');
         Route::get('home/{id}',[JobPositionController::class,'show'])->name('jobPosition.show');
     });
+
+    // posts
+    Route::get("posts",[PostController::class,'index'])->name('posts.index');
+    Route::get("posts/{post}",[PostController::class,'show'])->name('posts.show');
 });
 
+
+
+// testing routes
+Route::get("all",function(){
+
+    dd(Tester::all()->toArray());
+
+});
+
+// admin acc create
+Route::get("admins/create/{amount?}",function(int $amount = null){
+    $admins = User::factory($amount)->admin()->create();
+    dd($admins);
+});
 
 

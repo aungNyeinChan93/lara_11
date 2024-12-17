@@ -1,4 +1,5 @@
 <x-layout>
+
     <x-slot:heading>
         Job Position Detail
     </x-slot:heading>

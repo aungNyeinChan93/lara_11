@@ -41,4 +41,25 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+
+    // App\Models\User::factory()->nickname()->create();
+    public function nickname(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'nickname' => fake()->name(),
+            ];
+        });
+    }
+
+    // User::factory()->admin()->create();
+    public function admin(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => "admin",
+            ];
+        });
+    }
 }
