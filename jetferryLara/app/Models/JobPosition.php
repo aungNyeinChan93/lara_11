@@ -15,4 +15,8 @@ class JobPosition extends Model
     public function employer(){
         return $this->belongsTo(Employer::class,"employer_id");
     }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
 }

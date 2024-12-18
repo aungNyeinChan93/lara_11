@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Type;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -19,6 +21,13 @@ return new class extends Migration
             $table->string('type')->default('normal');
             $table->timestamps();
         });
+
+        Schema::create('customer_type', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Customer::class,'customer_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Type::class,'type_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -27,5 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('customers');
+        Schema::dropIfExists('customer_type');
     }
 };
