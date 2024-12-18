@@ -20,5 +20,9 @@
                 <x-customer-list-card  href="{{ route('customers.show',$customer->id) }} " :customer="$customer"></x-customer-list-card>
             @endforeach
         </ul>
+
+        <div class="mt-4">
+            {{$customers->links()}}
+        </div>
     </div>
 </x-layout>

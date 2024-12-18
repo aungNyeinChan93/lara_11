@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employer;
 use App\Models\JobPosition;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JobPositionController extends Controller
 {
@@ -12,7 +14,7 @@ class JobPositionController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function home(){
-        $jobs = JobPosition::orderBy("created_at","desc")->get();
+        $jobs = JobPosition::with(['employer','tags'])->orderBy("created_at","desc")->paginate(5);
         return view("test.jobPosition.home",compact('jobs'));
     }
 
@@ -24,5 +26,42 @@ class JobPositionController extends Controller
     public function show($id){
         $job = JobPosition::findOrFail($id);
         return view('test.jobPosition.detail',compact('job'));
+    }
+
+    /**
+     * Summary of createPage
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function createPage(){
+        $employers = Employer::get();
+        return view('test.jobPosition.createPage',compact('employers'));
+    }
+
+
+    /**
+     * Summary of create
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create(Request $request){
+
+        $fields = $request->validate([
+            'title'=>['required'],
+            'salary'=>['required'],
+            'employer_id'=>['required'],
+        ]);
+
+        JobPosition::create($fields);
+
+        // Alert::success('Success Title', 'Success Message');
+
+        return to_route('jobPosition.home')->with('create-job',"Job Create Success ! ");
+    }
+
+    //
+    public function destroy($id){
+        JobPosition::find($id)->delete();
+        // Alert::success('Success ', 'Delete Success');
+        return to_route('jobPosition.home')->with("delete-job","Job Delete Success !");
     }
 }

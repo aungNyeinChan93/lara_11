@@ -14,11 +14,16 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::query()->orderBy('id', 'desc')->get();
+        $customers = Customer::query()->orderBy('id', 'desc')->simplePaginate(2);
 
         return view('customers.list',compact('customers'));
     }
 
+    /**
+     * Summary of show
+     * @param \App\Models\Customer $customer
+     * @return \Illuminate\Contracts\View\View
+     */
     public function show(Customer $customer){
         return view('customers.detail',compact('customer'));
     }

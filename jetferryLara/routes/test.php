@@ -49,11 +49,16 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
     Route::prefix('jobPosition')->group(function(){
         Route::get('home',[JobPositionController::class,'home'])->name('jobPosition.home');
         Route::get('home/{id}',[JobPositionController::class,'show'])->name('jobPosition.show');
+        Route::get('create',[JobPositionController::class,'createPage'])->name("jobPosition.createPage");
+        Route::post('create',[JobPositionController::class,'create'])->name("jobPosition.create");
+        Route::delete('delete/{id}',[JobPositionController::class,'destroy'])->name("jobPosition.destroy");
     });
 
     // posts
     Route::get("posts",[PostController::class,'index'])->name('posts.index');
     Route::get("posts/{post}",[PostController::class,'show'])->name('posts.show');
+
+
 });
 
 
