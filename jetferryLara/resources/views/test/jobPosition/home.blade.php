@@ -6,11 +6,15 @@
 
     <div class="w-full my-3 px-5">
         @session('create-job')
-            <x-session-alert session="create-job" />
+            <x-session-alert>
+                {{ session('create-job') }}
+            </x-session-alert>
         @endsession
 
         @session('delete-job')
-            <x-session-alert session="delete-job" />
+            <x-session-alert>
+                {{ session('delete-job') }}
+            </x-session-alert>
         @endsession
     </div>
 
@@ -30,12 +34,11 @@
                     <form action="{{ route('jobPosition.destroy', $job->id) }}" method="POST">
                         @csrf
                         @method('delete')
-                        <button type="submit"
-                            class="px-3 py-1 bg-red-500 hover:bg-red-300 rounded-full">Delete</button>
+                        <button type="submit" class="px-3 py-1 bg-red-500 hover:bg-red-300 rounded-full">Delete</button>
                     </form>
                 </div>
             </div>
-        @endforeach 
+        @endforeach
     </div>
 
     <div class="mt-5">
