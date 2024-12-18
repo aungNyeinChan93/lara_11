@@ -58,10 +58,45 @@ class JobPositionController extends Controller
         return to_route('jobPosition.home')->with('create-job',"Job Create Success ! ");
     }
 
-    //
+    /**
+     * Summary of destroy
+     * @param mixed $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id){
         JobPosition::find($id)->delete();
         // Alert::success('Success ', 'Delete Success');
         return to_route('jobPosition.home')->with("delete-job","Job Delete Success !");
+    }
+
+    /**
+     * Summary of edit
+     * @param mixed $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function edit($id){
+        $employers = Employer::get();
+        $job = JobPosition::findOrFail($id);
+        return view('test.jobPosition.edit',compact(['employers','job']));
+    }
+
+    /**
+     * Summary of update
+     * @param mixed $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update($id){
+        $fields = request()->validate([
+            'title'=>['required'],
+            'salary'=>['required'],
+            'employer_id'=>['required'],
+        ]);
+
+        $job = JobPosition::findOrFail($id);
+
+        $job->update($fields);
+
+        return to_route('jobPosition.home')->with('update-job',"Job update Success ! ");
+
     }
 }
