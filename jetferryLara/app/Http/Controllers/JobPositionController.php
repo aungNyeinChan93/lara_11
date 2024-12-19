@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Employer;
 use App\Models\JobPosition;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class JobPositionController extends Controller
@@ -25,6 +27,7 @@ class JobPositionController extends Controller
      */
     public function show($id){
         $job = JobPosition::findOrFail($id);
+
         return view('test.jobPosition.detail',compact('job'));
     }
 
@@ -63,7 +66,9 @@ class JobPositionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id){
-        JobPosition::find($id)->delete();
+        $job = JobPosition::find($id)->delete();
+
+        Gate::authorize('delete',$job);
         // Alert::success('Success ', 'Delete Success');
         return to_route('jobPosition.home')->with("delete-job","Job Delete Success !");
     }
@@ -74,8 +79,17 @@ class JobPositionController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id){
+
         $employers = Employer::get();
+
         $job = JobPosition::findOrFail($id);
+
+        // if($job->employer->user->id !== Auth::user()->id){
+        //     abort(403);
+        // }
+
+        Gate::authorize("update",$job); //used policy
+
         return view('test.jobPosition.edit',compact(['employers','job']));
     }
 

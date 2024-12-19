@@ -16,4 +16,8 @@ class Employer extends Model
     public function jobPositions(){
         return $this->hasMany(JobPosition::class);
     }
-}   
+
+    public function user(){
+        return $this->belongsTo(User::class,"user_id");
+    }
+}

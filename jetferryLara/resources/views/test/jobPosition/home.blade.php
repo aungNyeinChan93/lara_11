@@ -39,15 +39,19 @@
 
                 <div class="flex justify-between gap-2 items-center">
                     <div>
-                        <a href="{{ route('jobPosition.edit', $job->id) }}"
-                            class="px-3 py-1 bg-yellow-500 hover:bg-yellow-300 rounded-full">Edit</a>
+                        @can('update', $job)
+                            <a href="{{ route('jobPosition.edit', $job->id) }}"
+                                class="px-3 py-1 bg-yellow-500 hover:bg-yellow-300 rounded-full">Edit</a>
+                        @endcan
                     </div>
-                    <form action="{{ route('jobPosition.destroy', $job->id) }}" method="POST">
-                        @csrf
-                        @method('delete')
-                        <button type="submit"
-                            class="px-3 py-1 bg-red-500 hover:bg-red-300 rounded-full">Delete</button>
-                    </form>
+                    @can('delete',$job)
+                        <form action="{{ route('jobPosition.destroy', $job->id) }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit"
+                                class="px-3 py-1 bg-red-500 hover:bg-red-300 rounded-full">Delete</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -32,6 +33,8 @@ class AuthController extends Controller
         ]);
 
         $user = User::create($fields);
+
+        // Auth::login($user);
 
         return to_route("login");
     }
@@ -63,12 +66,20 @@ class AuthController extends Controller
             return to_route('customers.index');
         }
 
-        return back()->withErrors([
+        throw ValidationException::withMessages([
             'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        ]);
+
+        // return back()->withErrors([
+        //     'email' => 'The provided credentials do not match our records.',
+        // ])->onlyInput('email');
     }
 
-    //
+    /**
+     * Summary of logout
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request){
         Auth::logout();
 

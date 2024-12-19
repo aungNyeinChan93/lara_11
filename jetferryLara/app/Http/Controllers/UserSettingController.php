@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+
 
 class UserSettingController extends Controller
 {
@@ -35,11 +37,11 @@ class UserSettingController extends Controller
 
         $request->validate([
             "oldPassword" => 'required',
-            "password" => "required|confirmed",
+            "password" => ["required", 'confirmed', Password::default()],
             "password_confirmation" => "required|same:password"
         ]);
 
-        if (Hash::check($request->oldPassword, Auth::user()->password)) {
+        if (Hash::check($request->oldPassword, Auth::user()->password) && $request->oldPassword != $request->password) {
             Auth::user()->update([
                 "password" => Hash::make($request->password)
             ]);
@@ -50,6 +52,8 @@ class UserSettingController extends Controller
         }
 
         return to_route('userSetting.index');
+
+
 
     }
 }

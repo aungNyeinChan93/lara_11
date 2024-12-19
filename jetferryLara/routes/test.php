@@ -91,4 +91,9 @@ Route::get("admins/create/{amount?}",function(int $amount = null){
     dd($admins);
 });
 
+// gate test
+Route::get('gate',function(){
+    dd('WELCOME CHAN!!!');
+})->can('chan',null);
+
 
