@@ -6,18 +6,18 @@
     <article class="rounded-xl border-2 border-gray-100 bg-white">
         <div class="flex items-start gap-4 p-4 sm:p-6 lg:p-8">
             <a href="#" class="block shrink-0">
-                <img alt=""
+                {{-- <img alt=""
                     src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                    class="size-14 rounded-lg object-cover" />
+                    class="size-14 rounded-lg object-cover" /> --}}
             </a>
 
             <div>
                 <h3 class="font-medium sm:text-lg">
-                    <a href="#" class="hover:underline"> {{$post->title}} </a>
+                    <a href="#" class="hover:underline"> {{ $post->title }} </a>
                 </h3>
 
                 <p class="line-clamp-2 text-sm text-gray-700">
-                    {{$post->description}}
+                    {{ $post->description }}
                 </p>
 
                 <div class="mt-2 sm:flex sm:items-center sm:gap-2">
@@ -35,15 +35,35 @@
 
                     <p class="hidden sm:block sm:text-xs sm:text-gray-500">
                         Posted by
-                        <a href="#" class="font-medium underline hover:text-gray-700"> {{ auth()->user()->name}} </a>
+                        <a href="#" class="font-medium underline hover:text-gray-700"> {{ $post->user->name }}
+                        </a>
                     </p>
                 </div>
+
+
+                @if (count($post->comments) !== 0)
+                    <h4 class="text-md underline p-2 ">Comments</h4>
+                @endif
+                <ul>
+                    @foreach ($post->comments as $comment)
+                        <div>
+                            <li class="text-xs text-blue-600 font-mono p-3 border my-1 border-red-500 rounded ">
+                                <span>{{ $comment->body }}</span>
+                            </li>
+                            <div class="text-xs text-gray-400 ms-3">
+                                <span>{{ $comment->user->name }} ( {{ $comment->user->created_at->diffForHumans() }} )
+                                </span>
+                            </div>
+                        </div>
+                    @endforeach
+                </ul>
             </div>
         </div>
 
         <div class="flex justify-between">
             <div class="mx-3">
-                <button  class="px-3 py-1 my-1 bg-green-500 rounded"><a href="{{route('posts.index')}}" class="">Back</a></button>
+                <button class="px-3 py-1 my-1 bg-green-500 rounded"><a href="{{ route('posts.index') }}"
+                        class="">Back</a></button>
             </div>
             <strong
                 class="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white">

@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
            JobPositionSeeder::class,
            PostSeeder::class,
            EmployerSeeder::class,
+           CommentSeeder::class,
+           LanguageSeeder::class,
         ]);
     }
 }

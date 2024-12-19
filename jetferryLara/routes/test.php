@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
 use App\Models\User;
 use App\Models\Tester;
@@ -13,6 +14,7 @@ use App\Http\Controllers\JobPositionController;
 Route::get("test/login", function () {
     return view('test.register');
 });
+
 
 Route::prefix('custome')->middleware(["guest"])->group(function () {
 
@@ -60,9 +62,9 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
     Route::get("posts",[PostController::class,'index'])->name('posts.index');
     Route::get("posts/{post}",[PostController::class,'show'])->name('posts.show');
 
-
+    // Language
+    Route::resource("languages",LanguageController::class);
 });
-
 
 
 // testing routes

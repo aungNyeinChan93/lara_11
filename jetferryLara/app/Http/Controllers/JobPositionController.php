@@ -37,7 +37,6 @@ class JobPositionController extends Controller
         return view('test.jobPosition.createPage',compact('employers'));
     }
 
-
     /**
      * Summary of create
      * @param \Illuminate\Http\Request $request
