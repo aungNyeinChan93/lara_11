@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserSettingController;
 use App\Models\User;
 use App\Models\Tester;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,13 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
         return view('users.home',compact('users'));
     })->name('userHome');
 
+
+    // user setting
+    Route::get("users/setting",[UserSettingController::class,'index'])->name('userSetting.index');
+    Route::get("users/setting/change",[UserSettingController::class,'change'])->name('userSetting.change');
+    Route::post("users/setting/update",[UserSettingController::class,'update'])->name('userSetting.update');
+
+
     // customer
     Route::get("customers", [CustomerController::class, 'index'])->name('customers.index');
     Route::get("customers/{customer}", [CustomerController::class, 'show'])->name('customers.show');
@@ -45,7 +53,6 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
 
     // logout
     Route::post('logout',[AuthController::class,'logout'])->name('logout');
-
 
     // jobPosition
     Route::prefix('jobPosition')->group(function(){
@@ -64,7 +71,11 @@ Route::group(['prefix' => "test",'middleware'=>['auth']], function () {
 
     // Language
     Route::resource("languages",LanguageController::class);
+
 });
+
+
+
 
 
 // testing routes
