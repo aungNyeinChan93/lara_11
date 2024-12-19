@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use App\Mail\LanguagePosted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class LanguageController extends Controller
 {
@@ -19,8 +23,9 @@ class LanguageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Language $language)
     {
+        Gate::authorize('create',$language);
         return view('test.languages.create');
     }
 
@@ -33,7 +38,9 @@ class LanguageController extends Controller
             'name' => 'required|min:3|max:20|unique:languages,name',
         ]);
 
-        Language::create($fields);
+        $language = Language::create($fields);
+
+        Mail::to(Auth::user()->email)->send(new LanguagePosted($language));
 
         return to_route('languages.index');
     }
@@ -52,6 +59,7 @@ class LanguageController extends Controller
      */
     public function edit(Language $language)
     {
+        Gate::authorize('update',$language);
         return view("test.languages.edit", compact('language'));
     }
 
@@ -75,6 +83,7 @@ class LanguageController extends Controller
      */
     public function destroy(Language $language)
     {
+        Gate::authorize('delete',$language);
         $language->delete();
 
         return to_route('languages.index');

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Employer;
 use App\Models\JobPosition;
 use Illuminate\Http\Request;
+use App\Mail\JobPositionCreate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class JobPositionController extends Controller
@@ -53,9 +55,9 @@ class JobPositionController extends Controller
             'employer_id'=>['required'],
         ]);
 
-        JobPosition::create($fields);
+        $job = JobPosition::create($fields);
 
-        // Alert::success('Success Title', 'Success Message');
+        Mail::to($job->employer->user->email)->send(new JobPositionCreate($job));
 
         return to_route('jobPosition.home')->with('create-job',"Job Create Success ! ");
     }

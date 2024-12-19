@@ -1,15 +1,18 @@
 <?php
 
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserSettingController;
+use App\Mail\Test;
 use App\Models\User;
 use App\Models\Tester;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\JobPositionController;
+use App\Http\Controllers\UserSettingController;
 // use Illuminate\Container\Attributes\Auth;
 
 Route::get("test/login", function () {
@@ -96,4 +99,12 @@ Route::get('gate',function(){
     dd('WELCOME CHAN!!!');
 })->can('chan',null);
 
+
+// mail test
+
+Route::get("test/mail",function(){
+    Mail::to(Auth::user()->email)->send(new Test());
+
+    dd('success test mail');
+});
 
