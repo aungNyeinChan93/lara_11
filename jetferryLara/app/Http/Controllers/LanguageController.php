@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\LanguageCreate;
 use App\Models\Language;
 use App\Mail\LanguagePosted;
 use Illuminate\Http\Request;
@@ -34,13 +35,15 @@ class LanguageController extends Controller
      */
     public function store(Request $request)
     {
+
         $fields = $request->validate([
             'name' => 'required|min:3|max:20|unique:languages,name',
         ]);
 
         $language = Language::create($fields);
-
-        Mail::to(Auth::user()->email)->send(new LanguagePosted($language));
+        
+        $user = Auth::user();
+        LanguageCreate::dispatch($language ,$user);   //use job and queue for mailing
 
         return to_route('languages.index');
     }

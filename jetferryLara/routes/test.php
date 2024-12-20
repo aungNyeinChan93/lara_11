@@ -2,6 +2,7 @@
 
 use App\Mail\Test;
 use App\Models\User;
+use App\Jobs\TestJob;
 use App\Models\Tester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -108,3 +109,19 @@ Route::get("test/mail",function(){
     dd('success test mail');
 });
 
+// queue test
+Route::get('test/queue',function(){ //need to run worker
+    dump("start..");
+    dispatch(function(){
+        logger("queue test!!!");
+    })->delay(5);
+    dump("end!");
+});
+
+
+// custome job
+Route::get('test/customeJob',function(){ // note - everything changed restart the worker!
+    $user = User::first();
+    TestJob::dispatch($user);
+    dump("hit");
+});

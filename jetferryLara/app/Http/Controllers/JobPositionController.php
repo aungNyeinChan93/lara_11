@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\JobCreate;
 use App\Models\Employer;
 use App\Models\JobPosition;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ class JobPositionController extends Controller
 
         $job = JobPosition::create($fields);
 
-        Mail::to($job->employer->user->email)->send(new JobPositionCreate($job));
+        JobCreate::dispatch($job);
 
         return to_route('jobPosition.home')->with('create-job',"Job Create Success ! ");
     }
